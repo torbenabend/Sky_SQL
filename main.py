@@ -1,6 +1,7 @@
 import flights_data
 from datetime import datetime
 import sqlalchemy
+import csv
 
 IATA_LENGTH = 3
 
@@ -74,6 +75,7 @@ def print_results(results):
     Even if there is one result, it should be provided in a list.
     Each object *has* to contain the columns:
     FLIGHT_ID, ORIGIN_AIRPORT, DESTINATION_AIRPORT, AIRLINE, and DELAY.
+    The user can choose, if he wants to save the results as .csv file.
     """
     print(f"Got {len(results)} results.")
     for result in results:
@@ -95,6 +97,28 @@ def print_results(results):
             print(f"{result['ID']}. {origin} -> {dest} by {airline}, Delay: {delay} Minutes")
         else:
             print(f"{result['ID']}. {origin} -> {dest} by {airline}")
+
+    # Export results
+    if len(results) != 0:
+        export_to_csv = input(
+            "Would you like to export this data to a CSV file? (y/n) "
+        ).lower()
+        if export_to_csv == "y":
+            export_csv(results)
+
+
+def export_csv(results):
+    """
+    Export flight results as .csv file.
+    Asks the user for a filename and stores the data in the file.
+    """
+    filename_csv = input("Enter filename (e.g., results.csv): ")
+    headers = list(results[0]._mapping.keys())
+    with open(filename_csv, "w", encoding="utf-8", newline="") as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerow(headers)
+        writer.writerows(results)
+    print(f"Exported {len(results)} to {filename_csv}")
 
 
 def show_menu_and_get_input():

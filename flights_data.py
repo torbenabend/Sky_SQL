@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine, text
 
-QUERY_FLIGHT_BY_ID = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.ID = :id"
-QUERY_FLIGHTS_BY_DATE = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.YEAR = :year AND flights.MONTH = :month AND flights.DAY = :day"
-QUERY_DELAYED_FLIGHTS_BY_AIRLINE = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE airlines.AIRLINE = :airline AND flights.DEPARTURE_DELAY >= 20"
-QUERY_DELAYED_FLIGHTS_BY_AIRPORT = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.ORIGIN_AIRPORT = :airport AND flights.DEPARTURE_DELAY >= 20"
+QUERY_FLIGHT_BY_ID = "SELECT flights.ID, flights.ORIGIN_AIRPORT, flights.DESTINATION_AIRPORT, airlines.AIRLINE, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.ID = :id"
+QUERY_FLIGHTS_BY_DATE = "SELECT flights.ID, flights.ORIGIN_AIRPORT, flights.DESTINATION_AIRPORT, airlines.AIRLINE, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.YEAR = :year AND flights.MONTH = :month AND flights.DAY = :day"
+QUERY_DELAYED_FLIGHTS_BY_AIRLINE = "SELECT flights.ID, flights.ORIGIN_AIRPORT, flights.DESTINATION_AIRPORT, airlines.AIRLINE, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE airlines.AIRLINE = :airline AND flights.DEPARTURE_DELAY >= 20"
+QUERY_DELAYED_FLIGHTS_BY_AIRPORT = "SELECT flights.ID, flights.ORIGIN_AIRPORT, flights.DESTINATION_AIRPORT, airlines.AIRLINE, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.ORIGIN_AIRPORT = :airport AND flights.DEPARTURE_DELAY >= 20"
 
 # Define the database URL
 DATABASE_URL = "sqlite:///data/flights.sqlite3"
