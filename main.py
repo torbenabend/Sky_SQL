@@ -24,7 +24,7 @@ def delayed_flights_by_airport():
     valid = False
     while not valid:
         airport_input = input("Enter origin airport IATA code: ")
-        # Valide input
+        # Valid input
         if airport_input.isalpha() and len(airport_input) == IATA_LENGTH:
             valid = True
     results = flights_data.get_delayed_flights_by_airport(airport_input)
@@ -70,7 +70,7 @@ def flights_by_date():
 
 def print_results(results):
     """
-    Get a list of flight results (List of dictionary-like objects from SQLAachemy).
+    Get a list of flight results (List of dictionary-like objects from SQLAlchemy).
     Even if there is one result, it should be provided in a list.
     Each object *has* to contain the columns:
     FLIGHT_ID, ORIGIN_AIRPORT, DESTINATION_AIRPORT, AIRLINE, and DELAY.
