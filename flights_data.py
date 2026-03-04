@@ -17,8 +17,9 @@ def execute_query(query, params):
     """
     try:
         with engine.connect() as conn:
-            # your code here
-            pass
+            results = conn.execute(text(query), params)
+            rows = results.fetchall()
+        return rows
     except Exception as e:
         print("Query error:", e)
         return []
