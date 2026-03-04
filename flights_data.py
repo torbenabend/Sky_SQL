@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, text
 
 QUERY_FLIGHT_BY_ID = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.ID = :id"
-QUERY_FLIGHT_BY_DATE = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.YEAR = :year AND flights.MONTH = :month AND flights.DAY = :day"
+QUERY_FLIGHTS_BY_DATE = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.YEAR = :year AND flights.MONTH = :month AND flights.DAY = :day"
 QUERY_DELAYED_FLIGHTS_BY_AIRLINE = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE airlines.AIRLINE = :airline AND flights.DEPARTURE_DELAY >= 20"
 QUERY_DELAYED_FLIGHTS_BY_AIRPORT = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.ORIGIN_AIRPORT = :airport AND flights.DEPARTURE_DELAY >= 20"
 
@@ -43,7 +43,7 @@ def get_flights_by_date(day, month, year):
     If flights were found, returns a list with all found records.
     """
     params = {"day": day, "month": month, "year": year}
-    return execute_query(QUERY_FLIGHT_BY_DATE, params)
+    return execute_query(QUERY_FLIGHTS_BY_DATE, params)
 
 
 def get_delayed_flights_by_airline(airline):
