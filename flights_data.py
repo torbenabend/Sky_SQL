@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, text
 
 QUERY_FLIGHT_BY_ID = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.ID = :id"
 QUERY_FLIGHT_BY_DATE = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE flights.YEAR = :year AND flights.MONTH = :month AND flights.DAY = :day"
+QUERY_DELAYED_FLIGHTS_BY_AIRLINE = "SELECT flights.*, airlines.airline, flights.ID as FLIGHT_ID, flights.DEPARTURE_DELAY as DELAY FROM flights JOIN airlines ON flights.airline = airlines.id WHERE airlines.AIRLINE = :airline AND flights.DEPARTURE_DELAY >= 20"
 
 # Define the database URL
 DATABASE_URL = "sqlite:///data/flights.sqlite3"
@@ -43,4 +44,12 @@ def get_flights_by_date(day, month, year):
     params = {"day": day, "month": month, "year": year}
     return execute_query(QUERY_FLIGHT_BY_DATE, params)
 
+
+def get_delayed_flights_by_airline(airline):
+    """
+    Searches for delayed flights by airline.
+    If flights were found, returns a list with all found records.
+    """
+    params = {"airline": airline}
+    return execute_query(QUERY_DELAYED_FLIGHTS_BY_AIRLINE, params)
     
